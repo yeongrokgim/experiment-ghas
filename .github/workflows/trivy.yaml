@@ -16,6 +16,7 @@ jobs:
             $*  || (sleep 1 && $*) || (sleep 2 && $*) || (sleep 4 && $*) || (sleep 8 && $*)
           }
           retry docker pull ghcr.io/aquasecurity/trivy-db:2
+        continue-on-error: true
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.28.0
