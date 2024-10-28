@@ -5,12 +5,17 @@ jobs:
   trivy:
     runs-on: ubuntu-22.04
     steps:
-      - run: sleep 10
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: |
+          retry () {
+            $*  || (sleep 1 && $*) || (sleep 2 && $*) || (sleep 4 && $*) || (sleep 8 && $*)
+          }
+          retry docker pull ghcr.io/aquasecurity/trivy-db:2
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.28.0
