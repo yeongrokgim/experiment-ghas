@@ -18,7 +18,7 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.28.0
         with:
-          image-ref: 'docker.io/ros:noetic-ros-core-focal'
+          image-ref: 'docker.io/library/ubuntu:22.04'
           format: 'sarif'
           output: 'trivy-results.sarif'
 
@@ -30,7 +30,7 @@ jobs:
       - name: Run Trivy scanner
         uses: aquasecurity/trivy-action@0.28.0
         with:
-          image-ref: 'docker.io/ros:noetic-ros-core-focal'
+          image-ref: 'docker.io/library/ubuntu:22.04'
           output: trivy.txt
 
       - name: Publish Trivy Output to Summary
@@ -72,7 +72,7 @@ jobs:
       - name: Run Clair V4
         uses: quay/clair-action@v0.0.10
         with:
-          image-ref: 'docker.io/ros:noetic-ros-core-focal'
+          image-ref: 'docker.io/library/ubuntu:22.04'
           format: sarif
           output: clair_results.sarif
           db-file: matcher.db
