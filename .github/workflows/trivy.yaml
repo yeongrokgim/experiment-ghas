@@ -15,20 +15,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.28.0
-        with:
-          image-ref: 'docker.io/library/ubuntu:22.04'
-          format: 'sarif'
-          output: 'trivy-results.sarif'
-        env:
-          TRIVY_SKIP_DB_UPDATE: true
-
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: 'trivy-results.sarif'
-
       - name: Run Trivy scanner
         uses: aquasecurity/trivy-action@0.28.0
         with:
@@ -52,6 +38,20 @@ jobs:
               echo "</details>"
             } >> $GITHUB_STEP_SUMMARY
           fi
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: 'docker.io/library/ubuntu:22.04'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+        env:
+          TRIVY_SKIP_DB_UPDATE: true
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
 
 
   clair:
